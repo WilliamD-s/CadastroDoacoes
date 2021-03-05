@@ -1,5 +1,5 @@
 # Postagens
-![GitHub](https://img.shields.io/github/license/WilliamD-s//CadastroDoacoes)
+![GitHub](https://img.shields.io/github/license/WilliamD-s/CadastroDoacoes)
 
 # Sobre o Projeto
 Projeto realizado utilizando padrão MVC em PHP para um CRUD mais complexo e detalhado para registro de Doações em dinheiro (ainda em andamento). 
@@ -7,8 +7,8 @@ Projeto realizado utilizando padrão MVC em PHP para um CRUD mais complexo e det
 ## Técnologias utilizadas
 ## Back end
 - PHP
-- - MySQL
-- 
+- MySQL
+ 
 ## Front end
 - HTML
 - CSS
