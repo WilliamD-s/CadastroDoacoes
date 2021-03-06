@@ -14,39 +14,36 @@ class Action{
     public function start($url){
 
         $page = 'home';
+              
+        if(isset($url['page'])){
+            $page = $url['page'];
+        }
         
-        if(isset($url['class']) && isset($url['metodo'])){
+        $conteudo = file_get_contents('app/View/'.$page.'.html');
+        $retorno = Action::fillTemplate($conteudo,$page.'.html');
 
-            $controller = ucfirst($url['class']."Controller");
-            
+        echo $retorno;
+    }
+
+    public static function runTask($dados){
+        if(isset($dados['class']) && isset($dados['task'])){
+            $controller = ucfirst($dados['class']."Controller");
             if(class_exists($controller)){
 
                 $id = null;
-                $acao = $url['metodo'];
+                $acao = $dados['task'];
 
-                if(isset($url['id'])){
-                    $id = $url['id'];
+                if(isset($dados['id'])){
+                    $id = $dados['id'];
                 }
 
                 call_user_func_array(array(new $controller, $acao),array('id' => $id));
             }
         }
-        
-        if(isset($url['page'])){
-            $page = $url['page'];
-            $base = file_get_contents('app/Template/index.html');
-            $conteudo = file_get_contents('app/View/'.$page.'.html');
-            $retorno = Action::fillTemplate($conteudo,'home.html');
-
-            echo $retorno;
-        }
-        
-
-        
     }
-    public static function fillTemplate($dados, $template = "app/Template/index.html"){
-        
-        $template = file_get_contents("app/View/".$template);
+
+    public static function fillTemplate($dados, $pagina = "index.html"){   
+        $template = file_get_contents("app/View/".$pagina);
         if(is_array($dados)){
             foreach($dados as $key=>$value){
                 $template = str_replace("{{".$key."}}",$value,$template);
