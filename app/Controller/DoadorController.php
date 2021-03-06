@@ -27,6 +27,14 @@ class DoadorController
 
     public function cadastrar()
     {
+        $intervalos = array();
+        $formas = array();
+        try{
+            $intervalos = IntervaloDoacao::selecionarTodos();
+            $formas = FormaPagamento::selecionarTodas();
+        }catch(Exception $e){
+            echo "<script>alert('" . $e->getMessage() . "');</script>";
+        }
         include('app/View/cadastrar.php');
     }
     public function insert()

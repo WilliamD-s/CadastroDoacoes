@@ -3,7 +3,7 @@
 class Doador{
     public static function selecionarTodos(){
         $con = Connection::getConn();
-        $query = $con->prepare('SELECT d.id, e.nome, d.data_cadastro, d.intervalo_doacao, d.valor_doacao, d.forma_pagamento, e.nome as estado, e.sigla as uf FROM doador d INNER JOIN endereco end ON d.endereco=end.id INNER JOIN estado e ON e.id=end.estado');
+        $query = $con->prepare('SELECT d.id, e.nome, d.data_cadastro, d.intervalo_doacao, d.valor_doacao, d.forma_pagamento, e.sigla as uf FROM doador d INNER JOIN endereco end ON d.endereco=end.id INNER JOIN estado e ON e.id=end.estado');
         $res = $query->execute();
 
         if($res){
