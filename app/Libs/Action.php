@@ -14,7 +14,6 @@ class Action
 {
     public function start($url)
     {
-
         $controller = "Doador";
         $metodo = "index";
         $id = null;

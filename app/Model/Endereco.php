@@ -16,20 +16,39 @@ class Endereco{
     }
     public static function merge($endereco){
 
-        $estado = Estado::merge($endereco->estado);
-        $cidade = Cidade::merge($endereco->cidade);
-
         $con = Connection::getConn();
-        $query = $con->prepare("INSERT INTO endereco(rua,bairro,estado,cidade,cep) VALUES (:rua, :bairro, :estado, :cidade, :cep)");
+        $query = $con->prepare("SELECT id FROM endereco WHERE rua=:rua AND bairro=:bairro AND estado=:estado AND cidade=:cidade AND cep=:cep");
         $query->bindValue(':rua',$endereco->rua,PDO::PARAM_STR);
         $query->bindValue(':bairro',$endereco->bairro,PDO::PARAM_STR);
-        $query->bindValue(':estado',$estado,PDO::PARAM_INT);
-        $query->bindValue(':cidade',$cidade,PDO::PARAM_INT);
+        $query->bindValue(':estado',$endereco->estado,PDO::PARAM_INT);
+        $query->bindValue(':cidade',$endereco->cidade,PDO::PARAM_INT);
         $query->bindValue(':cep',$endereco->cep,PDO::PARAM_STR);
         $res = $query->execute();
 
-        if($res == false){
-            throw new Exception("Erro ao registrar endereco!");
+        if($res){
+            if($id = $query->fetch()){
+                return $id;
+            }else{
+                $res = false;
+                $query = $con->prepare("INSERT INTO endereco(rua,bairro,estado,cidade,cep) VALUES (:rua, :bairro, :estado, :cidade, :cep)");
+                $query->bindValue(':rua',$endereco->rua,PDO::PARAM_STR);
+                $query->bindValue(':bairro',$endereco->bairro,PDO::PARAM_STR);
+                $query->bindValue(':estado',$endereco->estado,PDO::PARAM_INT);
+                $query->bindValue(':cidade',$endereco->cidade,PDO::PARAM_INT);
+                $query->bindValue(':cep',$endereco->cep,PDO::PARAM_STR);
+                $res = $query->execute();
+
+                if($res){
+                    $id = $con->lastInsertId();
+                    return $id;
+                }else{
+                    throw new Exception("Erro ao registrar novo endereço!");
+                }
+            }
+            
+        }else{
+            
+            throw new Exception("Erro ao registrar endereço!");
         }
     }
 }
