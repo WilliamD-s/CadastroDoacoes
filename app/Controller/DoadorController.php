@@ -48,7 +48,6 @@ class DoadorController
             $_POST['intervalo_daocao'],
             $_POST['valor_doacao'],
             $_POST['forma_pagamento'],
-            $_POST['estado'],
             $_POST['uf'],
             $_POST['cidade'],
             $_POST['bairro'],
@@ -58,10 +57,7 @@ class DoadorController
 
             $doador = new Doador();
             $endereco = new Endereco;
-            $estado = new Estado();
-            $cidade = new Cidade();
-
-            $doador->id = $_POST['id'];
+            
             $doador->nome = $_POST['nome'];
             $doador->email = $_POST['email'];
             $doador->cpf = $_POST['cpf'];
@@ -72,15 +68,10 @@ class DoadorController
             $doador->forma_pagamento = $_POST['forma_pagamento'];
             $endereco->rua = $_POST['rua'];
             $endereco->bairro = $_POST['bairro'];
+            $endereco->estado = $_POST['uf'];
+            $endereco->cidade = $_POST['cidade'];
             $endereco->cep = $_POST['cep'];
-            $cidade->nome = $_POST['cidade'];
-            $endereco->cidade = $cidade;
-            $endereco->estado->nome = $_POST['estado'];
-            $endereco->estado->sigla = $_POST['uf'];
             try {
-                $estado->id = Estado::merge($endereco->estado);
-                $endereco->cidade->uf = $estado;
-                $cidade->id = Cidade::merge($endereco->cidade);
                 $doador->endereco->id = Endereco::merge($endereco);
                 Doador::insert($doador);
             } catch (Exception $e) {

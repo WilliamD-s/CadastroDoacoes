@@ -3,7 +3,7 @@
 class Doador{
     public static function selecionarTodos(){
         $con = Connection::getConn();
-        $query = $con->prepare('SELECT d.id, e.nome, d.data_cadastro, d.intervalo_doacao, d.valor_doacao, d.forma_pagamento, e.sigla as uf FROM doador d INNER JOIN endereco end ON d.endereco=end.id INNER JOIN estado e ON e.id=end.estado');
+        $query = $con->prepare('SELECT d.id, d.nome, d.data_cadastro, d.intervalo_doacao, d.valor_doacao, d.forma_pagamento, e.estado as uf FROM doador d INNER JOIN endereco e ON d.endereco=e.id');
         $res = $query->execute();
 
         if($res){
@@ -76,7 +76,7 @@ class Doador{
     }
     public static function delete($id){
         $con = Connection::getConn();
-        $query = $con->prepare("DELETE doador,endereco FROM doador INNER JOIN endereco ON endereco.id=doador.endereco WHERE id=:id");
+        $query = $con->prepare("DELETE doador,endereco FROM doador INNER JOIN endereco ON endereco.id=doador.endereco WHERE doador.id=:id");
         $query->bindValue(":id",$id,PDO::PARAM_INT);
         $res = $query->execute();
 
