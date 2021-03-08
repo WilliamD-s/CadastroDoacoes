@@ -3,6 +3,15 @@
     margin:0px;
     background-color:white;
 }
+.doadores{
+    margin-left:auto;
+    margin-right:auto;
+    border:1px solid rgb(102, 102, 102);
+}
+.doadores td{
+    margin-right:12px;
+    margin-left:12px;
+}
 .interface{
     text-align:center;
     background-color:lightgray;

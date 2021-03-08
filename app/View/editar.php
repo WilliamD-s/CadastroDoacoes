@@ -44,4 +44,5 @@
         <input value="<?php echo $doador->endereco->estado; ?>" name="uf" type="text" id="uf" size="2"/></label><br />
     </div><br>
     <input type="submit" value="Atualizar">
-</form>
+</form><br>
+<nav><a href="?metodo=vizualizar&id=<?php echo $doador->id; ?>">Cancelar</a></nav>

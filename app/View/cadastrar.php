@@ -1,5 +1,5 @@
 <script src="app/assets/viacep.js"></script>
-<h2>pagina para cadastrar um novo doador</h2><br>
+<h2>Cadastro de doador</h2><br>
 <form  class="formulario" action="?metodo=insert" method="post">
     <div class="inputs-formulario">        
         <h3>Doador</h3><br>
