@@ -1,8 +1,8 @@
-<form  class="formulario" action="#">
+<form  class="formu-group" action="#">
     <div class="inputs-formulario"> 
         <h3>Doador</h3><br>
         <span>Nome </span>
-        <input value="<?php echo $doador->nome; ?>" disabled><br>
+        <input class="form-control" value="<?php echo $doador->nome; ?>" disabled><br>
         <span>Email:</span>
         <input value="<?php echo $doador->email; ?>" disabled><br>
         <span>CPF:</span>
@@ -32,5 +32,5 @@
         <label>Estado:
         <input value="<?php echo $doador->estado; ?>" disabled/></label><br />
     </div><br>
-    <a href=""><span>Editar</span></a>&nbsp;&nbsp;<a href=""><span>Excluir</span></a>
+    <a href="?metodo=editar&id=<?php echo $doador->id; ?>"><span class="btn btn-dark btn-hover">Editar</span></a>&nbsp;&nbsp;<a href="?metodo=excluir&id=<?php echo $doador->id; ?>"><span class="btn btn-danger btn-hover">Excluir</span></a>
 </form>

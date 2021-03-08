@@ -46,7 +46,7 @@ class DoadorController
         try {
             $doador = Tools::limparDoador($_POST);
             $endereco = Tools::limparEndereco($_POST);
-
+            
             $doador->id_endereco = Endereco::merge($endereco);
             Doador::merge($doador);
             echo "<script>location.href = '?metodo=index';</script>";
@@ -73,12 +73,13 @@ class DoadorController
         try {
             $doador = Tools::limparDoador($_POST);
             $endereco = Tools::limparEndereco($_POST);
-
+            
             $doador->id_endereco = Endereco::merge($endereco);
             Doador::merge($doador);
             echo "<script>location.href = '?metodo=index';</script>";
         } catch (Exception $e) {
             echo "<script>alert('".$e->getMessage()."');</script>";
+            echo "<script>location.href = '?metodo=cadastrar';</script>";
         }
         
     }

@@ -1,7 +1,7 @@
 <h2 class='titulo'>Lista de doadores</h2><br>
 <div>
     <?php if($doadores != null){ ?>
-    <table class="doadores">
+    <table class="table">
         <tr>
             <th>Id</th><th>Nome</th><th>Data do Cadastro</th><th>Intervalo</th><th>Valor</th><th>Pagamento</th><th>Região</th><th>Visualizar</th><th>Editar</th><th>Excluir</th>
         </tr>
@@ -21,6 +21,6 @@
         <?php } ?>
     </table>
     <?php }else{ ?>
-        <h3 class='aviso'>Não há nenhum doador cadastrado</h3>
+        <h3 class='alert alert-danger'>Não há nenhum doador cadastrado</h3>
     <?php } ?>
 </div>
