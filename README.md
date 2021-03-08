@@ -1,35 +1,27 @@
-# Postagens
+# Cadastro de Doações
 ![GitHub](https://img.shields.io/github/license/WilliamD-s/CadastroDoacoes)
 
 # Sobre o Projeto
-Projeto realizado utilizando padrão MVC em PHP para um CRUD mais complexo e detalhado para registro de Doações em dinheiro (ainda em andamento). 
+Projeto realizado utilizando padrão MVC em PHP para um CRUD mais complexo e detalhado para registro de Doações em dinheiro com e informações a respeito das opções de contribuição escolhida por cada doador. 
 
 ## Técnologias utilizadas
 ## Back end
 - PHP
 - MySQL
  
+## API
+-viacep
+ 
 ## Front end
 - HTML
 - CSS
 - Javascript
 
-# Como executar o projeto
+ ## Obs:
+ Em breve postarei os detalhes de como executar o projeto.
 
-### pré requisitos: PHP 7 (ou superior) e MySQL
-```bash
-  # Clonar Repositório
-    gh repo clone WilliamD-s/Postagens
-    
-  # executar o projeto
-  php -S localhost
-  
-  ```
-  ## Obs:
-  por enquanto ainda estou trabalhando no projeto portanto ainda não defini estruturas para o banco.
-  
-  # Autor
-  William de Souza
-  
-  https://www.linkedin.com/in/william-de-souza-040937194/
+ # Autor
+ William de Souza
+
+ https://www.linkedin.com/in/william-de-souza-040937194/
 
