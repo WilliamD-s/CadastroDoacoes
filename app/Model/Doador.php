@@ -9,6 +9,8 @@ class Doador{
         if($res){
             $result = array();
             while($row = $query->fetchObject('Doador')){
+                $row->data_cadastro = DateTime::createFromFormat ( "Y-m-d H:i:s", $row->data_cadastro );
+                $row->data_cadastro = $row->data_cadastro->format('d/m/Y');
                 $result[] = $row;
             }
             return $result;
@@ -19,12 +21,14 @@ class Doador{
     public static function selecionarPorId($id){
                 
         $con = Connection::getConn();
-        $query = $con->prepare("SELECT  FROM doador d WHERE id=:id");
+        $query = $con->prepare("SELECT d.nome,d.email,d.cpf,d.telefone,d.data_nascimento AS nascimento,i.nome AS intervalo,d.valor_doacao AS valor,p.nome AS pagamento, e.cep,e.rua,e.bairro,e.cidade,e.estado,e.id AS id_endereco FROM doador d INNER JOIN intervalo_doacao i ON i.id=d.intervalo_doacao INNER JOIN endereco e ON e.id=d.endereco INNER JOIN forma_pagamento p ON p.id=d.forma_pagamento  WHERE d.id=:id");
         $query->bindValue(":id",$id,PDO::PARAM_INT);
         $res = $query->execute();
 
         if($res){
             if($doador = $query->fetchObject('Doador')){
+                $doador->nascimento = DateTime::createFromFormat ( "Y-m-d H:i:s", $doador->nascimento );
+                $doador->nascimento = $doador->nascimento->format('d/m/Y');
                 return $doador;
             }else{
                 throw new Exception("Doador não encontrado!");

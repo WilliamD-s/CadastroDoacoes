@@ -14,9 +14,9 @@
         <td><?php echo $doador->valor_doacao; ?></td>
         <td><?php echo $doador->pagamento; ?></td>
         <td><?php echo $doador->uf; ?></td>
-        <td><a href="?metodo=vizualizar&id=<?php echo $doador->uf; ?>"><i class="fas fa-eye"></i></a></td>
-        <td><a href="?metodo=editar&id=<?php echo $doador->uf; ?>"><i class="fas fa-edit"></i></a></td>
-        <td><a href="?metodo=excluir&id=<?php echo $doador->uf; ?>"><i class="fas fa-user-times"></i></a></td>
+        <td><a href="?metodo=vizualizar&id=<?php echo $doador->id; ?>"><i class="fas fa-eye"></i></a></td>
+        <td><a href="?metodo=editar&id=<?php echo $doador->id; ?>"><i class="fas fa-edit"></i></a></td>
+        <td><a href="?metodo=excluir&id=<?php echo $doador->id; ?>"><i class="fas fa-user-times"></i></a></td>
         </tr>
         <?php } ?>
     </table>

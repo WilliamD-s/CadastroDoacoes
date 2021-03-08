@@ -74,12 +74,13 @@ class DoadorController
     }
     public function vizualizar($id){
         $doador = Doador::selecionarPorId($id);
-        include('app/View/vizualizar.php');
+        include('app/View/visualizar.php');
     }
-    public function delete($id)
+    public function excluir($id)
     {
         try {
-            Doador::delete($id);
+            Doador::delete($id);            
+            echo "<script>location.href = '?metodo=index';</script>";
         } catch (Exception $e) {
             echo "<scrip>alert(" . $e->getMessage() . ");</scrip>";
         }
