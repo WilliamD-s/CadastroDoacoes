@@ -58,8 +58,7 @@ class Doador{
             
             $res = $query->execute();
             if($res == false){
-                // throw new Exception("Erro ao registrar doador!");
-                throw new Exception(json_encode($doador));
+                throw new Exception("Erro ao registrar doador!");
             }
         }catch(PDOException $e){
             throw new Exception("erro: ".$e->getMessage());
