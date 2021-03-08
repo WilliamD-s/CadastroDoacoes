@@ -81,7 +81,6 @@ class DoadorController
             echo "<script>alert('".$e->getMessage()."');</script>";
             echo "<script>location.href = '?metodo=cadastrar';</script>";
         }
-        
     }
     public function vizualizar($id){
         $doador = Doador::selecionarPorId($id);

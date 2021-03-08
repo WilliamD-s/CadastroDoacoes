@@ -6,7 +6,7 @@ class Connection{
     public static function getConn(){
         try{
             if(self::$conn == null){
-                self::$conn = new PDO("mysql: host=localhost; dbname=vaga_dev;",'root','@@PsWORLD2099');
+                self::$conn = new PDO("mysql: host=localhost; dbname=seu_db;",'seu_user','sua_senha');
             }
             return self::$conn;
         }catch(PDOException $e){
