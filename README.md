@@ -9,19 +9,19 @@ Projeto realizado utilizando padrão MVC em PHP para um CRUD mais complexo e det
 - PHP
 - MySQL
  
- ## API
- -viacep
+## API
+-viacep
  
 ## Front end
 - HTML
 - CSS
 - Javascript
 
-  ## Obs:
-  Em breve postarei os detalhes de como executar o projeto.
-  
-  # Autor
-  William de Souza
-  
-  https://www.linkedin.com/in/william-de-souza-040937194/
+ ## Obs:
+ Em breve postarei os detalhes de como executar o projeto.
+
+ # Autor
+ William de Souza
+
+ https://www.linkedin.com/in/william-de-souza-040937194/
 
