@@ -22,7 +22,8 @@ class Tools{
 
             return $doador;
         } else {
-            throw new Exception('Por favor, preencha todos os dados do Doador');
+            // throw new Exception('Por favor, preencha todos os dados do Doador');
+            throw new Exception(json_encode($dados));
         }
     }
     public static function tratarEndereco($dados){
