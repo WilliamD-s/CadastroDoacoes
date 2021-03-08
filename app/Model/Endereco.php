@@ -4,7 +4,7 @@ class Endereco{
     public static function selecionarPorId($id){
         $con = Connection::getConn();
         $query = $con->prepare("SELECT * FROM endereco WHERE id=:id");
-        $query->bindValue(':id',$id);
+        $query->bindValue(':id',$id,PDO::PARAM_INT);
         $res = $query->execute();
         
         if($res != false){
@@ -22,13 +22,13 @@ class Endereco{
             $query = $con->prepare("INSERT INTO endereco(rua,bairro,estado,cidade,cep) VALUES (:rua, :bairro, :estado, :cidade, :cep)");
         }else{
             $query = $con->prepare("UPDATE endereco SET rua=:rua, bairro=:bairro, estado=:estado, cidade=:cidade, cep=:cep WHERE id=:id");
-            $query->bindValue(':id',$endereco->id);
+            $query->bindValue(':id',$endereco->id,PDO::PARAM_INT);
         }
-        $query->bindValue(':rua',$endereco->rua);
-        $query->bindValue(':bairro',$endereco->bairro);
-        $query->bindValue(':estado',$endereco->uf);
-        $query->bindValue(':cidade',$endereco->cidade);
-        $query->bindValue(':cep',$endereco->cep);
+        $query->bindValue(':rua',$endereco->rua,PDO::PARAM_STR);
+        $query->bindValue(':bairro',$endereco->bairro,PDO::PARAM_STR);
+        $query->bindValue(':estado',$endereco->uf,PDO::PARAM_STR);
+        $query->bindValue(':cidade',$endereco->cidade,PDO::PARAM_STR);
+        $query->bindValue(':cep',$endereco->cep,PDO::PARAM_STR);
         $res = $query->execute();
         
         if($res == false){

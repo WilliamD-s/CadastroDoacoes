@@ -14,12 +14,9 @@ class Action
 {
     public function start($url)
     {
-        $controller = "Doador";
+        $controller = "DoadorController";
         $metodo = "index";
         $id = null;
-        if (isset($url['page'])) {
-            $controller = $url['page'];
-        }
 
         if (isset($url['metodo'])) {
             $metodo = $url['metodo'];
@@ -28,8 +25,7 @@ class Action
         if (isset($url['id'])) {
             $id = $url['id'];
         }
-
-        $controller = ucfirst($controller . 'Controller');
+        
         call_user_func_array(array(new $controller, $metodo), array('id' => $id));
     }
 }

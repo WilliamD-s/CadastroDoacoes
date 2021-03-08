@@ -21,7 +21,7 @@ class Doador{
                 
         $con = Connection::getConn();
         $query = $con->prepare("SELECT d.id,d.nome,d.email,d.cpf,d.telefone,d.data_nascimento AS nascimento,i.nome AS intervalo,i.id AS id_intervalo,d.valor_doacao AS valor,p.nome AS pagamento, p.id AS id_pagamento,e.cep,e.rua,e.bairro,e.cidade,e.estado,e.id AS id_endereco FROM doador d INNER JOIN intervalo_doacao i ON i.id=d.intervalo_doacao INNER JOIN endereco e ON e.id=d.endereco INNER JOIN forma_pagamento p ON p.id=d.forma_pagamento  WHERE d.id=:id");
-        $query->bindValue(":id",$id);
+        $query->bindValue(":id",$id,PDO::PARAM_INT);
         $res = $query->execute();
 
         if($res){
