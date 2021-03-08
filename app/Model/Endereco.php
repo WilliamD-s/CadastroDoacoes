@@ -37,6 +37,18 @@ class Endereco{
         if(empty($endereco->id)){
             $id = $con->lastInsertId();
             return $id;
+        }else{
+            return $endereco->id;
+        }
+    }
+    public static function delete($id){
+        $con = Connection::getConn();
+        $query = $con->prepare("DELETE endereco FROM endereco WHERE id=:id");
+        $query->bindValue(":id",$id,PDO::PARAM_INT);
+        $res = $query->execute();
+
+        if($res == false){
+            throw new Exception("Erro ao deletar endereco!");
         }
     }
 }

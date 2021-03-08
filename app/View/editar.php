@@ -1,7 +1,8 @@
 <script src="app/assets/viacep.js"></script>
-<form  class="formulario" action="?metodo=insert" method="post">
+<form  class="formulario" action="?metodo=update" method="post">
     <div class="inputs-formulario">        
         <h3>Doador</h3><br>
+        <input type="hidden" value="<?php echo $doador->id; ?>" name="id">
         <span>Nome </span>
         <input value="<?php echo $doador->nome; ?>"type="text" name="nome"><br>
         <span>Email:</span>
@@ -11,7 +12,7 @@
         <span>Telefone</span>
         <input value="<?php echo $doador->telefone; ?>" type="text" name="telefone"><br>
         <span>Data de Nascimento</span>
-        <input value="<?php echo $doador->nascimento; ?>" type="date" name="data_nascimento"><br>
+        <input value="<?php echo $doador->data; ?>" type="date" name="data_nascimento"><br>
         <span>Intervalo de doações</span><br>
         <select name="intervalo_doacao">
             <?php foreach($intervalos as $intervalo){ ?>
@@ -30,16 +31,17 @@
         <br>
     <div>
         <h3>Endereco</h3><br>
+        <input type="hidden" value="<?php echo $doador->endereco->id; ?>" name="id_endereco">
         <label>Cep:
-        <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);"/></label><br />
+        <input value="<?php echo $doador->endereco->cep; ?>" name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);"/></label><br />
         <label>Rua:
-        <input name="rua" type="text" id="rua" size="60"/></label><br />
+        <input value="<?php echo $doador->endereco->rua; ?>" name="rua" type="text" id="rua" size="60"/></label><br />
         <label>Bairro:
-        <input name="bairro" type="text" id="bairro" size="40"/></label><br />
+        <input value="<?php echo $doador->endereco->bairro; ?>" name="bairro" type="text" id="bairro" size="40"/></label><br />
         <label>Cidade:
-        <input name="cidade" type="text" id="cidade" size="40"/></label><br />
+        <input value="<?php echo $doador->endereco->cidade; ?>" name="cidade" type="text" id="cidade" size="40"/></label><br />
         <label>Estado:
-        <input name="uf" type="text" id="uf" size="2"/></label><br />
+        <input value="<?php echo $doador->endereco->estado; ?>" name="uf" type="text" id="uf" size="2"/></label><br />
     </div><br>
-    <input type="submit" value="Cadastrar">
+    <input type="submit" value="Atualizar">
 </form>

@@ -3,7 +3,7 @@
 class Doador{
     public static function selecionarTodos(){
         $con = Connection::getConn();
-        $query = $con->prepare('SELECT d.id, d.nome,d.data_cadastro,i.nome AS intervalo,i.id AS id_intervalo, d.valor_doacao, p.nome AS pagamento,p.id AS id_pagamento, e.estado AS uf FROM doador d INNER JOIN endereco e ON d.endereco=e.id INNER JOIN forma_pagamento p ON p.id=d.forma_pagamento INNER JOIN intervalo_doacao i ON d.intervalo_doacao=i.id');
+        $query = $con->prepare('SELECT d.id, d.nome,d.data_cadastro,i.nome AS intervalo, d.valor_doacao, p.nome AS pagamento, e.estado AS uf FROM doador d INNER JOIN endereco e ON d.endereco=e.id INNER JOIN forma_pagamento p ON p.id=d.forma_pagamento INNER JOIN intervalo_doacao i ON d.intervalo_doacao=i.id');
         $res = $query->execute();
 
         if($res){
@@ -21,12 +21,14 @@ class Doador{
     public static function selecionarPorId($id){
                 
         $con = Connection::getConn();
-        $query = $con->prepare("SELECT d.nome,d.email,d.cpf,d.telefone,d.data_nascimento AS nascimento,i.nome AS intervalo,i.id AS id_intervalo,d.valor_doacao AS valor,p.nome AS pagamento, p.id AS id_pagamento,e.cep,e.rua,e.bairro,e.cidade,e.estado,e.id AS id_endereco FROM doador d INNER JOIN intervalo_doacao i ON i.id=d.intervalo_doacao INNER JOIN endereco e ON e.id=d.endereco INNER JOIN forma_pagamento p ON p.id=d.forma_pagamento  WHERE d.id=:id");
+        $query = $con->prepare("SELECT d.id,d.nome,d.email,d.cpf,d.telefone,d.data_nascimento AS nascimento,i.nome AS intervalo,i.id AS id_intervalo,d.valor_doacao AS valor,p.nome AS pagamento, p.id AS id_pagamento,e.cep,e.rua,e.bairro,e.cidade,e.estado,e.id AS id_endereco FROM doador d INNER JOIN intervalo_doacao i ON i.id=d.intervalo_doacao INNER JOIN endereco e ON e.id=d.endereco INNER JOIN forma_pagamento p ON p.id=d.forma_pagamento  WHERE d.id=:id");
         $query->bindValue(":id",$id,PDO::PARAM_INT);
         $res = $query->execute();
 
         if($res){
             if($doador = $query->fetchObject('Doador')){
+                $doador->data = DateTime::createFromFormat ( "Y-m-d H:i:s", $doador->nascimento );
+                $doador->data = $doador->data->format('Y-m-d');
                 $doador->nascimento = DateTime::createFromFormat ( "Y-m-d H:i:s", $doador->nascimento );
                 $doador->nascimento = $doador->nascimento->format('d/m/Y');
                 return $doador;
@@ -60,7 +62,7 @@ class Doador{
             
             $res = $query->execute();
             if($res == false){
-                throw new Exception("Erro ao realizar operação");
+                throw new Exception("Erro ao registrar doador!");
             }
         }catch(PDOException $e){
             throw new Exception("erro: ".$e->getMessage());
@@ -69,7 +71,7 @@ class Doador{
     }
     public static function delete($id){
         $con = Connection::getConn();
-        $query = $con->prepare("DELETE doador,endereco FROM doador INNER JOIN endereco ON endereco.id=doador.endereco WHERE doador.id=:id");
+        $query = $con->prepare("DELETE FROM doador WHERE id=:id");
         $query->bindValue(":id",$id,PDO::PARAM_INT);
         $res = $query->execute();
 

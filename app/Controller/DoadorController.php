@@ -41,7 +41,21 @@ class DoadorController
             echo "<script>alert('" . $e->getMessage() . "');</script>";
         }
     }
+    public function update()
+    {
+        try {
+            $doador = Tools::limparDoador($_POST);
+            $endereco = Tools::limparEndereco($_POST);
 
+            $doador->id_endereco = Endereco::merge($endereco);
+            Doador::merge($doador);
+            echo "<script>location.href = '?metodo=index';</script>";
+        } catch (Exception $e) {
+            echo "<script>alert('".$e->getMessage()."');</script>";
+            echo "<script>location.href = '?metodo=editar&id=".$doador->id."';</script>";
+        }
+        
+    }
     public function cadastrar()
     {
         $intervalos = array();
@@ -75,6 +89,8 @@ class DoadorController
     public function excluir($id)
     {
         try {
+            $doador = Doador::selecionarPorId($id);
+            Endereco::delete($doador->id_endereco);
             Doador::delete($id);            
             echo "<script>location.href = '?metodo=index';</script>";
         } catch (Exception $e) {
