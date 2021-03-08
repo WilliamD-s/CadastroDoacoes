@@ -17,8 +17,8 @@ class DoadorController
         try {
             $doador = Doador::selecionarPorId($id);
             $doador->endereco = Endereco::selecionarPorId($doador->endereco);
-            $doador->forma_pagamento = FormaPagamento::selecionarPorId($doador->forma_pagamento);
-            $doador->intervalo_doacao = IntervaloDoacao::selecionarPorId($doador->intervalo_doacao);
+            $doador->forma_pagamento = FormaPagamento::selecionarPorId($doador->id_pagamento);
+            $doador->intervalo_doacao = IntervaloDoacao::selecionarPorId($doador->id_intervalo);
             include('app/View/visualizar.php');
         } catch (Exception $e) {
             echo "<script>alert('" . $e->getMessage() . "');</script>";
@@ -27,12 +27,16 @@ class DoadorController
 
     public function editar($id)
     {
+        $intervalos = array();
+        $formas = array();
         try {
+            $intervalos = IntervaloDoacao::selecionarTodos();
+            $formas = FormaPagamento::selecionarTodas();
             $doador = Doador::selecionarPorId($id);
-            $doador->endereco = Endereco::selecionarPorId($doador->endereco);
-            $doador->forma_pagamento = FormaPagamento::selecionarPorId($doador->forma_pagamento);
-            $doador->intervalo_doacao = IntervaloDoacao::selecionarPorId($doador->intervalo_doacao);
-            include('app/View/visualizar.php');
+            $doador->endereco = Endereco::selecionarPorId($doador->id_endereco);
+            $doador->forma_pagamento = FormaPagamento::selecionarPorId($doador->id_pagamento);
+            $doador->intervalo_doacao = IntervaloDoacao::selecionarPorId($doador->id_intervalo);
+            include('app/View/editar.php');
         } catch (Exception $e) {
             echo "<script>alert('" . $e->getMessage() . "');</script>";
         }

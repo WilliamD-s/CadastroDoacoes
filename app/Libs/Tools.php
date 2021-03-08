@@ -7,7 +7,10 @@ class Tools{
             isset($dados['forma_pagamento'])) {
 
             $doador = new Doador();
-            
+
+            if(isset($dados['id'])){
+                $doador->id = $dados['id'];
+            }
             $doador->nome = addslashes($dados['nome']);
             $doador->email = addslashes($dados['email']);
             $doador->cpf = addslashes($dados['cpf']);
@@ -28,6 +31,10 @@ class Tools{
 
             $endereco = new Endereco();
             
+            if(isset($dados['id_endereco'])){
+                $endereco->id = $dados['id_endereco'];
+            }
+
             $endereco->rua = addslashes($dados['rua']);
             $endereco->bairro = addslashes($dados['bairro']);
             $endereco->uf = addslashes($dados['uf']);

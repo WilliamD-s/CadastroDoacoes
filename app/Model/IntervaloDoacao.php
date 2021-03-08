@@ -18,7 +18,7 @@ class IntervaloDoacao{
     }
     public static function selecionarPorId($id){
         $con = Connection::getConn();
-        $query = $con->prepare("SELECT * FROM intevalo_doacao WHERE id=:id");
+        $query = $con->prepare("SELECT * FROM intervalo_doacao WHERE id=:id");
         $query->bindValue(":id",$id,PDO::PARAM_INT);
         $res = $query->execute();
 
