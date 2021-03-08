@@ -2,7 +2,7 @@
 ![GitHub](https://img.shields.io/github/license/WilliamD-s/CadastroDoacoes)
 
 # Sobre o Projeto
-Projeto realizado utilizando padrão MVC em PHP para um CRUD mais complexo e detalhado para registro de Doações em dinheiro com dados mais detalhados a respeito do doador (endereço, telefone, CPF). 
+Projeto realizado utilizando padrão MVC em PHP para um CRUD mais complexo e detalhado para registro de Doações em dinheiro com e informações a respeito das opções de contribuição escolhida por cada doador. 
 
 ## Técnologias utilizadas
 ## Back end
