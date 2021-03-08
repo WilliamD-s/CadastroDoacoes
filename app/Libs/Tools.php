@@ -1,7 +1,7 @@
 <?php 
 
 class Tools{
-    public static function limparDoador($dados){
+    public static function tratarDoador($dados){
         if (isset($dados['nome']) && isset($dados['email']) && isset($dados['cpf']) && isset($dados['telefone']) && 
             isset($dados['data_nascimento']) && isset($dados['intervalo_doacao']) && isset($dados['valor_doacao']) && 
             isset($dados['forma_pagamento'])) {
@@ -25,7 +25,7 @@ class Tools{
             throw new Exception('Por favor, preencha todos os dados do Doador');
         }
     }
-    public static function limparEndereco($dados){
+    public static function tratarEndereco($dados){
         if (isset($dados['uf']) && isset($dados['cidade']) && 
             isset($dados['bairro']) && isset($dados['rua']) && isset($dados['cep'])) {
 
@@ -45,5 +45,15 @@ class Tools{
         } else {
             throw new Exception('Por favor, preencha todos os dados do Endereco');
         }
+    }
+    public static function timestampParaData($data){
+        $data = DateTime::createFromFormat ( "Y-m-d H:i:s", $data);
+        $data = $data->format('d/m/Y');
+        return $data;
+    }
+    public static function timestampParaHtml($data){
+        $data = DateTime::createFromFormat ( "Y-m-d H:i:s", $data);
+        $data = $data->format('Y-m-d');
+        return $data;
     }
 }

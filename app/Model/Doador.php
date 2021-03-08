@@ -9,8 +9,7 @@ class Doador{
         if($res){
             $result = array();
             while($row = $query->fetchObject('Doador')){
-                $row->data_cadastro = DateTime::createFromFormat ( "Y-m-d H:i:s", $row->data_cadastro );
-                $row->data_cadastro = $row->data_cadastro->format('d/m/Y');
+                $row->data_cadastro = Tools::timestampParaData($row->data_cadastro);
                 $result[] = $row;
             }
             return $result;
@@ -27,10 +26,8 @@ class Doador{
 
         if($res){
             if($doador = $query->fetchObject('Doador')){
-                $doador->data = DateTime::createFromFormat ( "Y-m-d H:i:s", $doador->nascimento );
-                $doador->data = $doador->data->format('Y-m-d');
-                $doador->nascimento = DateTime::createFromFormat ( "Y-m-d H:i:s", $doador->nascimento );
-                $doador->nascimento = $doador->nascimento->format('d/m/Y');
+                $doador->data = Tools::timestampParaHtml($doador->nascimento);
+                $doador->nascimento = Tools::timestampParaData($doador->nascimento);
                 return $doador;
             }else{
                 throw new Exception("Doador não encontrado!");
@@ -43,11 +40,11 @@ class Doador{
         try{
             $con = Connection::getConn();
 
-            if(empty($doador->id)){
-                $query = $con->prepare("INSERT INTO doador (nome,email,cpf,telefone,data_nascimento,intervalo_doacao,valor_doacao,forma_pagamento,endereco) VALUES (:nome,:email,:cpf,:telefone,:nascimento,:intervalo,:valor,:forma,:endereco)");
-            }else{
+            if(isset($doador->id)){
                 $query = $con->prepare("UPDATE doador SET nome=:nome,email=:email,cpf=:cpf,telefone=:telefone,data_nascimento=:nascimento,intervalo_doacao=:intervalo,valor_doacao=:valor,forma_pagamento=:forma,endereco=:endereco WHERE id=:id");
                 $query->bindValue(':id',$doador->id,PDO::PARAM_INT);
+            }else{                
+                $query = $con->prepare("INSERT INTO doador (nome,email,cpf,telefone,data_nascimento,intervalo_doacao,valor_doacao,forma_pagamento,endereco) VALUES (:nome,:email,:cpf,:telefone,:nascimento,:intervalo,:valor,:forma,:endereco)");
             }
             $query->bindValue(':nome',$doador->nome,PDO::PARAM_STR);
             $query->bindValue(':email',$doador->email,PDO::PARAM_STR);

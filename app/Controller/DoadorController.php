@@ -44,8 +44,8 @@ class DoadorController
     public function update()
     {
         try {
-            $doador = Tools::limparDoador($_POST);
-            $endereco = Tools::limparEndereco($_POST);
+            $doador = Tools::tratarDoador($_POST);
+            $endereco = Tools::tratarEndereco($_POST);
             
             $doador->id_endereco = Endereco::merge($endereco);
             Doador::merge($doador);
@@ -71,8 +71,8 @@ class DoadorController
     public function insert()
     {
         try {
-            $doador = Tools::limparDoador($_POST);
-            $endereco = Tools::limparEndereco($_POST);
+            $doador = Tools::tratarDoador($_POST);
+            $endereco = Tools::tratarEndereco($_POST);
             
             $doador->id_endereco = Endereco::merge($endereco);
             Doador::merge($doador);
