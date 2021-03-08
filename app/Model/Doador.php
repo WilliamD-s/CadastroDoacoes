@@ -34,14 +34,20 @@ class Doador{
                 throw new Exception("Doador não encontrado!");
             }            
         }else{
-            throw new Exception("Erro ao localizar doador!");
+            throw new Exception("Erro ao consultar doadores!");
         }
     }
-    public static function insert($doador){
+    public static function merge($doador){
         
         try{
             $con = Connection::getConn();
-            $query = $con->prepare("INSERT INTO doador (nome,email,cpf,telefone,data_nascimento,intervalo_doacao,valor_doacao,forma_pagamento,endereco) VALUES (:nome,:email,:cpf,:telefone,:nascimento,:intervalo,:valor,:forma,:endereco)");
+
+            if(empty($doador->id)){
+                $query = $con->prepare("INSERT INTO doador (nome,email,cpf,telefone,data_nascimento,intervalo_doacao,valor_doacao,forma_pagamento,endereco) VALUES (:nome,:email,:cpf,:telefone,:nascimento,:intervalo,:valor,:forma,:endereco)");
+            }else{
+                $query = $con->prepare("UPDATE doador SET nome=:nome,email=:email,cpf=:cpf,telefone=:telefone,data_nascimento=:nascimento,intervalo_doacao=:intervalo,valor_doacao=:valor,forma_pagamento=:forma,endereco=:endereco WHERE id=:id");
+                $query->bindValue(':id',$doador->id);
+            }
             $query->bindValue(':nome',$doador->nome);
             $query->bindValue(':email',$doador->email);
             $query->bindValue(':cpf',$doador->cpf);
@@ -51,9 +57,10 @@ class Doador{
             $query->bindValue(':valor',$doador->valor);
             $query->bindValue(':forma',$doador->forma);
             $query->bindValue(':endereco',$doador->id_endereco);
+            
             $res = $query->execute();
             if($res == false){
-                throw new Exception("Falha ao cadastrar doador!");
+                throw new Exception("Erro ao realizar operação");
             }
         }catch(PDOException $e){
             throw new Exception("erro: ".$e->getMessage());

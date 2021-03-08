@@ -4,7 +4,7 @@ class Tools{
     public static function limparDoador($dados){
         if (isset($dados['nome']) && isset($dados['email']) && isset($dados['cpf']) && isset($dados['telefone']) && 
             isset($dados['data_nascimento']) && isset($dados['intervalo_doacao']) && isset($dados['valor_doacao']) && 
-            isset($$dados['forma_pagamento'])) {
+            isset($dados['forma_pagamento'])) {
 
             $doador = new Doador();
             
@@ -13,15 +13,13 @@ class Tools{
             $doador->cpf = addslashes($dados['cpf']);
             $doador->telefone = addslashes($dados['telefone']);
             $doador->nascimento = date("Y-m-d H:i:s", strtotime($dados['data_nascimento']));
-            $doador->intervalo = $$dados['intervalo_doacao'];
+            $doador->intervalo = $dados['intervalo_doacao'];
             $doador->valor = addslashes($dados['valor_doacao']);
             $doador->forma = $dados['forma_pagamento'];
 
             return $doador;
-            
         } else {
-            echo "<scrip>alert('Por favor, preencha todos os dados do Doador');</scrip>";
-            echo '<script>location.href = "?metodo=cadastrar";</script>';
+            throw new Exception('Por favor, preencha todos os dados do Doador');
         }
     }
     public static function limparEndereco($dados){
@@ -38,8 +36,7 @@ class Tools{
 
             return $endereco;
         } else {
-            echo "<scrip>alert('Por favor, preencha todos os dados do Endereco');</scrip>";
-            echo '<script>location.href = "?metodo=cadastrar";</script>';
+            throw new Exception('Por favor, preencha todos os dados do Endereco');
         }
     }
 }

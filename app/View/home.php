@@ -11,7 +11,7 @@
         <td><?php echo $doador->nome; ?></td>
         <td><?php echo $doador->data_cadastro; ?></td>
         <td><?php echo $doador->intervalo; ?></td>
-        <td><?php echo $doador->valor_doacao; ?></td>
+        <td>R$: <?php echo $doador->valor_doacao; ?></td>
         <td><?php echo $doador->pagamento; ?></td>
         <td><?php echo $doador->uf; ?></td>
         <td><a href="?metodo=vizualizar&id=<?php echo $doador->id; ?>"><i class="fas fa-eye"></i></a></td>

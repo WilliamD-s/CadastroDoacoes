@@ -20,34 +20,23 @@ class Endereco{
 
         if(empty($endereco->id)){
             $query = $con->prepare("INSERT INTO endereco(rua,bairro,estado,cidade,cep) VALUES (:rua, :bairro, :estado, :cidade, :cep)");
-            $query->bindValue(':rua',$endereco->rua,PDO::PARAM_STR);
-            $query->bindValue(':bairro',$endereco->bairro,PDO::PARAM_STR);
-            $query->bindValue(':estado',$endereco->uf,PDO::PARAM_STR);
-            $query->bindValue(':cidade',$endereco->cidade,PDO::PARAM_STR);
-            $query->bindValue(':cep',$endereco->cep,PDO::PARAM_INT);
-            $res = $query->execute();
-
-            if($res == false){
-                throw new Exception("Falha ao cadastrar endereço!");
-            }else{
-                $id = $con->lastInsertId();
-                return $id;
-            }
         }else{
             $query = $con->prepare("UPDATE endereco SET rua=:rua, bairro=:bairro, estado=:estado, cidade=:cidade, cep=:cep WHERE id=:id");
             $query->bindValue(':id',$endereco->id,PDO::PARAM_INT);
-            $query->bindValue(':rua',$endereco->rua,PDO::PARAM_STR);
-            $query->bindValue(':bairro',$endereco->bairro,PDO::PARAM_STR);
-            $query->bindValue(':estado',$endereco->uf,PDO::PARAM_STR);
-            $query->bindValue(':cidade',$endereco->cidade,PDO::PARAM_STR);
-            $query->bindValue(':cep',$endereco->cep,PDO::PARAM_INT);
-            $res = $query->execute();
-            
-            if($res == false){
-                throw new Exception("Falha ao atualizar endereço!");
-            }else{
-                return true;
-            }
+        }
+        $query->bindValue(':rua',$endereco->rua,PDO::PARAM_STR);
+        $query->bindValue(':bairro',$endereco->bairro,PDO::PARAM_STR);
+        $query->bindValue(':estado',$endereco->uf,PDO::PARAM_STR);
+        $query->bindValue(':cidade',$endereco->cidade,PDO::PARAM_STR);
+        $query->bindValue(':cep',$endereco->cep,PDO::PARAM_INT);
+        $res = $query->execute();
+        
+        if($res == false){
+            throw new Exception("Falha ao registrar endereço!");
+        }
+        if(empty($endereco->id)){
+            $id = $con->lastInsertId();
+            return $id;
         }
     }
 }
