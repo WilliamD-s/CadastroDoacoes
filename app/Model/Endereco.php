@@ -17,38 +17,37 @@ class Endereco{
     public static function merge($endereco){
 
         $con = Connection::getConn();
-        $query = $con->prepare("SELECT id FROM endereco WHERE rua=:rua AND bairro=:bairro AND estado=:estado AND cidade=:cidade AND cep=:cep");
-        $query->bindValue(':rua',$endereco->rua,PDO::PARAM_STR);
-        $query->bindValue(':bairro',$endereco->bairro,PDO::PARAM_STR);
-        $query->bindValue(':estado',$endereco->estado,PDO::PARAM_STR);
-        $query->bindValue(':cidade',$endereco->cidade,PDO::PARAM_STR);
-        $query->bindValue(':cep',$endereco->cep,PDO::PARAM_INT);
-        $res = $query->execute();
 
-        if($res){
-            if($id = $query->fetch()){
-                return $id;
+        if(empty($endereco->id)){
+            $query = $con->prepare("INSERT INTO endereco(rua,bairro,estado,cidade,cep) VALUES (:rua, :bairro, :estado, :cidade, :cep)");
+            $query->bindValue(':rua',$endereco->rua,PDO::PARAM_STR);
+            $query->bindValue(':bairro',$endereco->bairro,PDO::PARAM_STR);
+            $query->bindValue(':estado',$endereco->uf,PDO::PARAM_STR);
+            $query->bindValue(':cidade',$endereco->cidade,PDO::PARAM_STR);
+            $query->bindValue(':cep',$endereco->cep,PDO::PARAM_INT);
+            $res = $query->execute();
+
+            if($res == false){
+                throw new Exception("Falha ao cadastrar endereço!");
             }else{
-                $res = false;
-                $query = $con->prepare("INSERT INTO endereco(rua,bairro,estado,cidade,cep) VALUES (:rua, :bairro, :estado, :cidade, :cep)");
-                $query->bindValue(':rua',$endereco->rua,PDO::PARAM_STR);
-                $query->bindValue(':bairro',$endereco->bairro,PDO::PARAM_STR);
-                $query->bindValue(':estado',$endereco->estado,PDO::PARAM_STR);
-                $query->bindValue(':cidade',$endereco->cidade,PDO::PARAM_STR);
-                $query->bindValue(':cep',$endereco->cep,PDO::PARAM_INT);
-                $res = $query->execute();
-
-                if($res){
-                    $id = $con->lastInsertId();
-                    return $id;
-                }else{
-                    throw new Exception("Erro ao registrar novo endereço!");
-                }
+                $id = $con->lastInsertId();
+                return $id;
             }
-            
         }else{
+            $query = $con->prepare("UPDATE endereco SET rua=:rua, bairro=:bairro, estado=:estado, cidade=:cidade, cep=:cep WHERE id=:id");
+            $query->bindValue(':id',$endereco->id,PDO::PARAM_INT);
+            $query->bindValue(':rua',$endereco->rua,PDO::PARAM_STR);
+            $query->bindValue(':bairro',$endereco->bairro,PDO::PARAM_STR);
+            $query->bindValue(':estado',$endereco->uf,PDO::PARAM_STR);
+            $query->bindValue(':cidade',$endereco->cidade,PDO::PARAM_STR);
+            $query->bindValue(':cep',$endereco->cep,PDO::PARAM_INT);
+            $res = $query->execute();
             
-            throw new Exception("Erro ao registrar endereço!");
+            if($res == false){
+                throw new Exception("Falha ao atualizar endereço!");
+            }else{
+                return true;
+            }
         }
     }
 }

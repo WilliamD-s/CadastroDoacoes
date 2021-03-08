@@ -1,13 +1,12 @@
 <?php
 
 require_once("app/Libs/Connection.php");
+require_once("app/Libs/Tools.php");
 
 require_once("app/Controller/DoadorController.php");
 
-require_once("app/Model/Cidade.php");
 require_once("app/Model/Doador.php");
 require_once("app/Model/Endereco.php");
-require_once("app/Model/Estado.php");
 require_once("app/Model/IntervaloDoacao.php");
 require_once("app/Model/FormaPagamento.php");
 

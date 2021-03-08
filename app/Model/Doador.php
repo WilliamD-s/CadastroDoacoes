@@ -3,7 +3,7 @@
 class Doador{
     public static function selecionarTodos(){
         $con = Connection::getConn();
-        $query = $con->prepare('SELECT d.id, d.nome, d.data_cadastro, d.intervalo_doacao, d.valor_doacao, d.forma_pagamento, e.estado as uf FROM doador d INNER JOIN endereco e ON d.endereco=e.id');
+        $query = $con->prepare('SELECT d.id, d.nome, d.data_cadastro, i.nome AS intervalo, d.valor_doacao, p.nome AS pagamento, e.estado AS uf FROM doador d INNER JOIN endereco e ON d.endereco=e.id INNER JOIN forma_pagamento p ON p.id=d.forma_pagamento INNER JOIN intervalo_doacao i ON d.intervalo_doacao=i.id');
         $res = $query->execute();
 
         if($res){
@@ -19,7 +19,7 @@ class Doador{
     public static function selecionarPorId($id){
                 
         $con = Connection::getConn();
-        $query = $con->prepare("SELECT * FROM doador WHERE id=:id");
+        $query = $con->prepare("SELECT  FROM doador d WHERE id=:id");
         $query->bindValue(":id",$id,PDO::PARAM_INT);
         $res = $query->execute();
 
@@ -33,46 +33,28 @@ class Doador{
             throw new Exception("Erro ao localizar doador!");
         }
     }
-    public static function insert($dados){
-        $con = Connection::getConn();
-        $query = $con->prepare('INSERT INTO doador(nome, email, cpf, telefone, data_nascimento, intervalo_doacao, valor_doacao, forma_pagamento, endereco) VALUES(:nome, :email, :cpf, :telefone, :data_nascimento, :intervalo_doacao, :valor_doacao, :forma_pagamento, :endereco)');
-        $query->bindValue(":nome",$dados->nome,PDO::PARAM_STR);
-        $query->bindValue(":email",$dados->email,PDO::PARAM_STR);
-        $query->bindValue(":cpf",$dados->cpf,PDO::PARAM_STR);
-        $query->bindValue(":telefone",$dados->telefone,PDO::PARAM_STR);
-        $query->bindValue(":data_nascimento",$dados->data_nascimento);
-        $query->bindValue(":intervalo_doacao",$dados->intervalo_doacao,PDO::PARAM_INT);
-        $query->bindValue(":valor_daocao",$dados->valor_doacao);
-        $query->bindValue(":forma_pagamento",$dados->forma_pagamento,PDO::PARAM_INT);
-        $query->bindValue(":endereco",$dados->endereco->id,PDO::PARAM_INT);
-        $res = $query->execute();
-
-        if($res){
-            return true;
-        }else{            
-            throw new Exception("Erro ao cadastrar doador!");
+    public static function insert($doador){
+        
+        try{
+            $con = Connection::getConn();
+            $query = $con->prepare("INSERT INTO doador (nome,email,cpf,telefone,data_nascimento,intervalo_doacao,valor_doacao,forma_pagamento,endereco) VALUES (:nome,:email,:cpf,:telefone,:nascimento,:intervalo,:valor,:forma,:endereco)");
+            $query->bindValue(':nome',$doador->nome);
+            $query->bindValue(':email',$doador->email);
+            $query->bindValue(':cpf',$doador->cpf);
+            $query->bindValue(':telefone',$doador->telefone);
+            $query->bindValue(':nascimento',$doador->nascimento);
+            $query->bindValue(':intervalo',$doador->intervalo);
+            $query->bindValue(':valor',$doador->valor);
+            $query->bindValue(':forma',$doador->forma);
+            $query->bindValue(':endereco',$doador->id_endereco);
+            $res = $query->execute();
+            if($res == false){
+                throw new Exception("Falha ao cadastrar doador!");
+            }
+        }catch(PDOException $e){
+            throw new Exception("erro: ".$e->getMessage());
         }
-    }
-    public static function update($dados){
-        $con = Connection::getConn();
-        $query = $con->prepare('UPDATE doador SET nome=:nome, email=:email, cpf=:cpf, telefone=:telefone, data_nascimento=:data_nascimento, intervalo_doacao=:intervalo_daocao, valor_doacao=:valor_doacao, forma_pagamento=:forma_pagamento, endereco=:endereco WHERE id=:id');
-        $query->bindValue(":id",$dados->id,PDO::PARAM_INT);
-        $query->bindValue(":nome",$dados->nome,PDO::PARAM_STR);
-        $query->bindValue(":email",$dados->email,PDO::PARAM_STR);
-        $query->bindValue(":cpf",$dados->cpf,PDO::PARAM_STR);
-        $query->bindValue(":telefone",$dados->telefone,PDO::PARAM_STR);
-        $query->bindValue(":data_nascimento",$dados->data_nascimento);
-        $query->bindValue(":intervalo_doacao",$dados->intervalo_doacao,PDO::PARAM_INT);
-        $query->bindValue(":valor_daocao",$dados->valor_doacao);
-        $query->bindValue(":forma_pagamento",$dados->forma_pagamento,PDO::PARAM_INT);
-        $query->bindValue(":endereco",$dados->endereco->id,PDO::PARAM_INT);
-        $res = $query->execute();
 
-        if($res){
-            return true;
-        }else{            
-            throw new Exception("Erro ao atualizar dados!");
-        }
     }
     public static function delete($id){
         $con = Connection::getConn();

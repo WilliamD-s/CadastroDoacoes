@@ -39,54 +39,49 @@ class DoadorController
     }
     public function insert()
     {
-        if (isset(
-            $_POST['nome'],
-            $_POST['email'],
-            $_POST['cpf'],
-            $_POST['telefone'],
-            $_POST['data_nascimento'],
-            $_POST['intervalo_daocao'],
-            $_POST['valor_doacao'],
-            $_POST['forma_pagamento'],
-            $_POST['uf'],
-            $_POST['cidade'],
-            $_POST['bairro'],
-            $_POST['rua'],
-            $_POST['cep']
-        )) {
+        if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['cpf']) && isset($_POST['telefone']) && 
+            isset($_POST['data_nascimento']) && isset($_POST['intervalo_doacao']) && isset($_POST['valor_doacao']) && 
+            isset($_POST['forma_pagamento']) && isset($_POST['uf']) && isset($_POST['cidade']) && 
+            isset($_POST['bairro']) && isset($_POST['rua']) && isset($_POST['cep'])) {
 
             $doador = new Doador();
-            $endereco = new Endereco;
+            $endereco = new Endereco();
             
-            $doador->nome = $_POST['nome'];
-            $doador->email = $_POST['email'];
-            $doador->cpf = $_POST['cpf'];
-            $doador->telefone = $_POST['telefone'];
-            $doador->data_nascimento = date("Y-m-d H:i:s", strtotime($_POST['data_nascimento']));
-            $doador->intervalo_doacao = $_POST['intervalo_daocao'];
-            $doador->valor_daocao = $_POST['valor_daocao'];
-            $doador->forma_pagamento = $_POST['forma_pagamento'];
-            $endereco->rua = $_POST['rua'];
-            $endereco->bairro = $_POST['bairro'];
-            $endereco->estado = $_POST['uf'];
-            $endereco->cidade = $_POST['cidade'];
-            $endereco->cep = $_POST['cep'];
+            $doador->nome = addslashes($_POST['nome']);
+            $doador->email = addslashes($_POST['email']);
+            $doador->cpf = addslashes($_POST['cpf']);
+            $doador->telefone = addslashes($_POST['telefone']);
+            $doador->nascimento = date("Y-m-d H:i:s", strtotime($_POST['data_nascimento']));
+            $doador->intervalo = $_POST['intervalo_doacao'];
+            $doador->valor = addslashes($_POST['valor_doacao']);
+            $doador->forma = $_POST['forma_pagamento'];
+            $endereco->rua = addslashes($_POST['rua']);
+            $endereco->bairro = addslashes($_POST['bairro']);
+            $endereco->uf = addslashes($_POST['uf']);
+            $endereco->cidade = addslashes($_POST['cidade']);
+            $endereco->cep = addslashes($_POST['cep']);
             try {
-                $doador->endereco->id = Endereco::merge($endereco);
+                $doador->id_endereco = Endereco::merge($endereco);
                 Doador::insert($doador);
+                echo "<script>location.href = '?metodo=index';</script>";
             } catch (Exception $e) {
-                echo "<script>alert(" . $e->getMessage() . ");</script>";
+                echo "<script>alert('".$e->getMessage()."');</script>";
             }
         } else {
-            echo "<script>alert('Por favor, preencha todos os campos');</script>";
+            echo "<scrip>alert('Por favor, preencha todos os campos');</scrip>";
+            echo '<script>location.href = "?metodo=cadastrar";</script>';
         }
+    }
+    public function vizualizar($id){
+        $doador = Doador::selecionarPorId($id);
+        include('app/View/vizualizar.php');
     }
     public function delete($id)
     {
         try {
             Doador::delete($id);
         } catch (Exception $e) {
-            echo "<script>alert(" . $e->getMessage() . ");</script>";
+            echo "<scrip>alert(" . $e->getMessage() . ");</scrip>";
         }
     }
 }
