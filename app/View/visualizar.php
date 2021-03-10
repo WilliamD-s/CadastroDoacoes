@@ -78,5 +78,5 @@
       <input type="text" class="form-control" value="<?php echo $doador->estado; ?>" disabled>
     </div>
   </div>
-    <a href="?metodo=editar&id=<?php echo $doador->id; ?>"><span class="btn btn-dark btn-hover">Editar</span></a>&nbsp;&nbsp;<a href="?metodo=excluir&id=<?php echo $doador->id; ?>"><span class="btn btn-danger btn-hover">Excluir</span></a>
+  <a href="?metodo=editar&id=<?php echo $doador->id; ?>"><span class="btn btn-dark btn-hover">Editar</span></a>&nbsp;&nbsp;<a href="?metodo=excluir&id=<?php echo $doador->id; ?>"><span class="btn btn-danger btn-hover">Excluir</span></a>
 </form>

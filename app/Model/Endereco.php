@@ -32,8 +32,7 @@ class Endereco{
         $res = $query->execute();
         
         if($res == false){
-            // throw new Exception("Falha ao registrar endereço!");
-            throw new Exception(json_encode($endereco));
+            throw new Exception("Falha ao registrar endereço!");
         }
         if(empty($endereco->id)){
             $id = $con->lastInsertId();
@@ -50,6 +49,27 @@ class Endereco{
 
         if($res == false){
             throw new Exception("Erro ao deletar endereco!");
+        }
+    }    
+    public static function tratarEndereco($dados){
+        if (isset($dados['uf']) && isset($dados['cidade']) && 
+            isset($dados['bairro']) && isset($dados['rua']) && isset($dados['cep'])) {
+
+            $endereco = new Endereco();
+            
+            if(isset($dados['id_endereco'])){
+                $endereco->id = $dados['id_endereco'];
+            }
+
+            $endereco->rua = addslashes($dados['rua']);
+            $endereco->bairro = addslashes($dados['bairro']);
+            $endereco->uf = addslashes($dados['uf']);
+            $endereco->cidade = addslashes($dados['cidade']);
+            $endereco->cep = addslashes($dados['cep']);
+
+            return $endereco;
+        } else {
+            throw new Exception('Por favor, preencha todos os dados do Endereco');
         }
     }
 }

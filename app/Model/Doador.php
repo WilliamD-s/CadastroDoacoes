@@ -75,4 +75,28 @@ class Doador{
             throw new Exception("Erro ao deletar doador");
         }
     }
+    public static function tratarDoador($dados){
+        if (isset($dados['nome']) && isset($dados['email']) && isset($dados['cpf']) && isset($dados['telefone']) && 
+            isset($dados['data_nascimento']) && isset($dados['intervalo_doacao']) && isset($dados['valor_doacao']) && 
+            isset($dados['forma_pagamento'])) {
+
+            $doador = new Doador();
+
+            if(isset($dados['id'])){
+                $doador->id = $dados['id'];
+            }
+            $doador->nome = addslashes($dados['nome']);
+            $doador->email = addslashes($dados['email']);
+            $doador->cpf = addslashes($dados['cpf']);
+            $doador->telefone = addslashes($dados['telefone']);
+            $doador->nascimento = date("Y-m-d H:i:s", strtotime($dados['data_nascimento']));
+            $doador->intervalo = $dados['intervalo_doacao'];
+            $doador->valor = addslashes($dados['valor_doacao']);
+            $doador->forma = $dados['forma_pagamento'];
+
+            return $doador;
+        } else {
+            throw new Exception(json_encode($dados));
+        }
+    }
 }

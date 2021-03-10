@@ -44,8 +44,8 @@ class DoadorController
     public function update()
     {
         try {
-            $doador = Tools::tratarDoador($_POST);
-            $endereco = Tools::tratarEndereco($_POST);
+            $doador = Doador::tratarDoador($_POST);
+            $endereco = Endereco::tratarEndereco($_POST);
             
             $doador->id_endereco = Endereco::merge($endereco);
             Doador::merge($doador);
@@ -71,13 +71,14 @@ class DoadorController
     public function insert()
     {
         try {
-            $doador = Tools::tratarDoador($_POST);
-            $endereco = Tools::tratarEndereco($_POST);
+            $doador = Doador::tratarDoador($_POST);
+            $endereco = Endereco::tratarEndereco($_POST);
             
             $doador->id_endereco = Endereco::merge($endereco);
             Doador::merge($doador);
             echo "<script>location.href = '?metodo=index';</script>";
         } catch (Exception $e) {
+            Endereco::delete($doador->id_endereco);
             echo "<script>alert('".$e->getMessage()."');</script>";
             echo "<script>location.href = '?metodo=cadastrar';</script>";
         }
