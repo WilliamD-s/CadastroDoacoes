@@ -96,7 +96,7 @@ class Doador{
 
             return $doador;
         } else {
-            throw new Exception(json_encode($dados));
+            throw new Exception("Por favor, preencha todos campos");
         }
     }
 }
